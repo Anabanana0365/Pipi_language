@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pipi Language Encoder/Decoder</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        
+        .container {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+            max-width: 600px;
+            width: 100%;
+        }
+        
+        h1 {
+            text-align: center;
+            color: #4a5568;
+            margin-bottom: 30px;
+            font-size: 2.5em;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        
+        .input-group {
+            margin-bottom: 25px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #2d3748;
+            font-weight: bold;
+            font-size: 1.1em;
+        }
+        
+        textarea {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #e2e8f0;
+            border-radius: 10px;
+            font-size: 16px;
+            resize: vertical;
+            min-height: 120px;
+            transition: border-color 0.3s ease;
+        }
+        
+        textarea:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+        
+        .button-group {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+        }
+        
+        button {
+            flex: 1;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            min-width: 120px;
+        }
+        
+        .encode-btn {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+        }
+        
+        .decode-btn {
+            background: linear-gradient(135deg, #f093fb, #f5576c);
+            color: white;
+        }
+        
+        .auto-btn {
+            background: linear-gradient(135deg, #ff9a9e, #fecfef);
+            color: white;
+        }
+        
+        .copy-btn {
+            background: linear-gradient(135deg, #4facfe, #00f2fe);
+            color: white;
+        }
+        
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        button:active {
+            transform: translateY(0);
+        }
+        
+        .popup {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 15px 20px;
+            border-radius: 10px;
+            color: white;
+            font-weight: bold;
+            z-index: 1000;
+            transform: translateX(400px);
+            transition: transform 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .popup.show {
+            transform: translateX(0);
+        }
+        
+        .popup.success {
+            background: linear-gradient(135deg, #56ab2f, #a8e6cf);
+        }
+        
+        .popup.info {
+            background: linear-gradient(135deg, #3498db, #2980b9);
+        }
+        
+        .explanation {
+            background: rgba(255, 255, 255, 0.7);
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+            border-left: 4px solid #667eea;
+        }
+        
+        .explanation h3 {
+            color: #2d3748;
+            margin-bottom: 10px;
+        }
+        
+        .explanation p {
+            color: #4a5568;
+            line-height: 1.6;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🤫 Pipi Language 🤫</h1>
+        
+        <div class="input-group">
+            <label for="input-text">Enter your text:</label>
+            <textarea id="input-text" placeholder="Type your message here..."></textarea>
+        </div>
+        
+        <div class="button-group">
+            <button class="encode-btn" onclick="encodeText()">🔒 Encode to Pipi</button>
+            <button class="decode-btn" onclick="decodeText()">🔓 Decode from Pipi</button>
+            <button class="auto-btn" onclick="autoTranslate()">🔄 Reverse Translation</button>
+            <button class="copy-btn" onclick="copyToClipboard()">📋 Copy Result</button>
+        </div>
+        
+        <div class="input-group">
+            <label for="output-text">Result:</label>
+            <textarea id="output-text" readonly placeholder="Your encoded/decoded message will appear here..."></textarea>
+        </div>
+        
+        <div class="explanation">
+            <h3>How Pipi Language Works:</h3>
+            <p>
+                The Pipi Language is a fun cipher that transforms your text by adding "pi" before every vowel (a, e, i, o, u) 
+                and "po" before every consonant. Use the <strong>Reverse Translation</strong> button to automatically flip 
+                whatever is currently in the result field - if it's encoded, it decodes it, and if it's decoded, it encodes it!
+            </p>
+        </div>
+    </div>
+
+    <script>
+        function encodeText() {
+            const input = document.getElementById('input-text').value;
+            const output = document.getElementById('output-text');
+            
+            if (!input.trim()) {
+                showPopup('Please enter some text to encode!', 'info');
+                return;
+            }
+            
+            let encoded = '';
+            const vowels = 'aeiouAEIOU';
+            
+            for (let char of input) {
+                if (char.match(/[a-zA-Z]/)) {
+                    if (vowels.includes(char)) {
+                        encoded += 'pi' + char;
+                    } else {
+                        encoded += 'po' + char;
+                    }
+                } else {
+                    encoded += char;
+                }
+            }
+            
+            output.value = encoded;
+            showPopup('Text successfully encoded to Pipi Language!', 'success');
+        }
+        
+        function decodeText() {
+            const input = document.getElementById('input-text').value;
+            const output = document.getElementById('output-text');
+            
+            if (!input.trim()) {
+                showPopup('Please enter some text to decode!', 'info');
+                return;
+            }
+            
+            let decoded = input.replace(/pi([aeiouAEIOU])/g, '$1');
+            decoded = decoded.replace(/po([bcdfghjklmnpqrstvwxyzBCDFGHJKLMNPQRSTVWXYZ])/g, '$1');
+            
+            output.value = decoded;
+            showPopup('Text successfully decoded from Pipi Language!', 'success');
+        }
+        
+        function autoTranslate() {
+            const output = document.getElementById('output-text');
+            const currentResult = output.value;
+            
+            if (!currentResult.trim()) {
+                showPopup('No translation to reverse! Please encode or decode some text first.', 'info');
+                return;
+            }
+            
+            // Check if the current result is in Pipi language by looking for the pattern
+            const isPipiLanguage = /pi[aeiouAEIOU]|po[bcdfghjklmnpqrstvwxyzBCDFGHJKLMNPQRSTVWXYZ]/g.test(currentResult);
+            
+            if (isPipiLanguage) {
+                // Decode from Pipi
+                let decoded = currentResult.replace(/pi([aeiouAEIOU])/g, '$1');
+                decoded = decoded.replace(/po([bcdfghjklmnpqrstvwxyzBCDFGHJKLMNPQRSTVWXYZ])/g, '$1');
+                output.value = decoded;
+                showPopup('Translation reversed - Decoded from Pipi Language!', 'success');
+            } else {
+                // Encode to Pipi
+                let encoded = '';
+                const vowels = 'aeiouAEIOU';
+                
+                for (let char of currentResult) {
+                    if (char.match(/[a-zA-Z]/)) {
+                        if (vowels.includes(char)) {
+                            encoded += 'pi' + char;
+                        } else {
+                            encoded += 'po' + char;
+                        }
+                    } else {
+                        encoded += char;
+                    }
+                }
+                output.value = encoded;
+                showPopup('Translation reversed - Encoded to Pipi Language!', 'success');
+            }
+        }
+        
+        function copyToClipboard() {
+            const output = document.getElementById('output-text');
+            
+            if (!output.value.trim()) {
+                showPopup('Nothing to copy! Please encode or decode some text first.', 'info');
+                return;
+            }
+            
+            output.select();
+            document.execCommand('copy');
+            showPopup('Text copied to clipboard!', 'success');
+        }
+        
+        function showPopup(message, type) {
+            // Remove existing popup if any
+            const existingPopup = document.querySelector('.popup');
+            if (existingPopup) {
+                existingPopup.remove();
+            }
+            
+            const popup = document.createElement('div');
+            popup.className = `popup ${type}`;
+            popup.textContent = message;
+            document.body.appendChild(popup);
+            
+            // Show popup
+            setTimeout(() => {
+                popup.classList.add('show');
+            }, 100);
+            
+            // Hide popup after 3 seconds
+            setTimeout(() => {
+                popup.classList.remove('show');
+                setTimeout(() => {
+                    popup.remove();
+                }, 300);
+            }, 3000);
+        }
+        
+        // Allow Enter key to auto-translate
+        document.getElementById('input-text').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter' && !e.shiftKey) {
+                e.preventDefault();
+                autoTranslate();
+            }
+        });
+    </script>
+</body>
+</html>
