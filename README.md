@@ -26,6 +26,11 @@ instead of this!:
 - [x] open the `pipi_language.html`-file that **not** are in the folder
 
 
+# tips for lazy guys
+
+download the `pipi_language_folder.zip` and open it! then you dont need to put the two files in a folder yourself!
+
+
 
 
 ## good luck! :)
