@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pipi Language Encoder/Decoder</title>
+    <!-- Style -->
     <style>
         * {
             margin: 0;
@@ -169,19 +170,19 @@
             <label for="input-text">Enter your text:</label>
             <textarea id="input-text" placeholder="Type your message here..."></textarea>
         </div>
-        
+        <!-- Buttons -->
         <div class="button-group">
             <button class="encode-btn" onclick="encodeText()">🔒 Encode to Pipi</button>
             <button class="decode-btn" onclick="decodeText()">🔓 Decode from Pipi</button>
             <button class="auto-btn" onclick="autoTranslate()">🔄 Reverse Translation</button>
             <button class="copy-btn" onclick="copyToClipboard()">📋 Copy Result</button>
         </div>
-        
+        <!-- Resultbox -->
         <div class="input-group">
             <label for="output-text">Result:</label>
             <textarea id="output-text" readonly placeholder="Your encoded/decoded message will appear here..."></textarea>
         </div>
-        
+        <!-- info and that things -->
         <div class="explanation">
             <h3>How Pipi Language Works:</h3>
             <p>
@@ -191,7 +192,7 @@
             </p>
         </div>
     </div>
-
+<!-- decrypt and that stuff -->
     <script>
         function encodeText() {
             const input = document.getElementById('input-text').value;
