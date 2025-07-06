@@ -384,6 +384,28 @@
   100% { transform: scale(1.5); opacity: 1; }
 }
 
+        @keyframes neonPulse {
+  0%, 100% {
+    filter: drop-shadow(0 0 10px #39ff14);
+    background-color: #00ffcc;
+  }
+  50% {
+    filter: drop-shadow(0 0 20px #ff00ff);
+    background-color: #ff00ff;
+  }
+}
+
+.pulse-dot {
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: #39ff14;
+  animation: neonPulse 3s infinite ease-in-out;
+  opacity: 0.8;
+}
+
+
     </style>
 </head>
 <body>
@@ -463,7 +485,9 @@
                     <button class="preset-btn" onclick="setBackgroundPreset('#a8edea', '#fed6e3')">Mint</button>
                     <button class="preset-btn" onclick="setBackgroundPreset('#ffecd2', '#fcb69f')">Orange</button>
                    <button class="preset-btn" onclick="setBackgroundPreset('#B00020', '#6A0DAD')">Red</button>
-                    <button class="preset-btn" onclick="setPartyPreset()">Party Preset</button>
+                    <button class="preset-btn" onclick="setPartyPreset()">Party Preset 1</button>
+                    <button class="preset-btn" onclick="setNeonPulsePreset()">Party Preset 2</button>
+
 
 
                 </div>
@@ -800,6 +824,29 @@
     }
   }
 </script>
+
+    <script>
+function setNeonPulsePreset() {
+  // Sett bakgrunn til svart for neon-effekt
+  document.body.style.background = "#000000";
+  document.body.style.animation = "";
+  document.body.style.overflow = "hidden";
+
+  // Fjern gamle prikker/stjerner
+  document.querySelectorAll(".star, .pulse-dot").forEach(el => el.remove());
+
+  // Lag neon-puls prikker
+  for (let i = 0; i < 80; i++) {
+    const dot = document.createElement("div");
+    dot.classList.add("pulse-dot");
+    dot.style.top = Math.random() * window.innerHeight + "px";
+    dot.style.left = Math.random() * window.innerWidth + "px";
+    dot.style.animationDelay = (Math.random() * 3) + "s";
+    document.body.appendChild(dot);
+  }
+}
+</script>
+
 
 </body>
 </html>
