@@ -8,13 +8,21 @@
 
 i think to add `localStorage` to save customization. if you want to do it, do it then. 😃
 
-# how to help me with the `localStorage`
+
+## how to help me with the `localStorage`
 
 - fork this repo
 - add `localStorage`
 - start a pull request
 - i'll check it
-- if it work ill add it and credit you :) 
+- if it work ill add it and credit you :)
+
+## other things you can do
+
+- test it
+- check for bugs
+- fork it, then fix bugs then start a pull request
+- share this repo with friends and family
 
 
 
