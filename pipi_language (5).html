@@ -823,6 +823,13 @@
       document.body.appendChild(star);
     }
   }
+
+        if (!document.fullscreenElement) {
+  document.documentElement.requestFullscreen().catch(err => {
+    console.warn(`Kan ikke gå i fullskjerm: ${err.message}`);
+  });
+}
+
 </script>
 
     <script>
@@ -845,6 +852,12 @@ function setNeonPulsePreset() {
     document.body.appendChild(dot);
   }
 }
+        if (!document.fullscreenElement) {
+  document.documentElement.requestFullscreen().catch(err => {
+    console.warn(`Kan ikke gå i fullskjerm: ${err.message}`);
+  });
+}
+
 </script>
 
 
