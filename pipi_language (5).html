@@ -374,6 +374,16 @@
             color: #4a5568;
             line-height: 1.6;
         }
+        @keyframes partyGradient {
+  0% { background-position: 0% 50%; }
+  100% { background-position: 100% 50%; }
+}
+
+@keyframes twinkle {
+  0% { transform: scale(1); opacity: 0.2; }
+  100% { transform: scale(1.5); opacity: 1; }
+}
+
     </style>
 </head>
 <body>
@@ -453,6 +463,8 @@
                     <button class="preset-btn" onclick="setBackgroundPreset('#a8edea', '#fed6e3')">Mint</button>
                     <button class="preset-btn" onclick="setBackgroundPreset('#ffecd2', '#fcb69f')">Orange</button>
                    <button class="preset-btn" onclick="setBackgroundPreset('#B00020', '#6A0DAD')">Red</button>
+                    <button class="preset-btn" onclick="setPartyPreset()">Party Preset</button>
+
 
                 </div>
             </div>
@@ -759,5 +771,35 @@
             }
         });
     </script>
+    <script>
+  function setPartyPreset() {
+    // Sett bakgrunn
+    document.body.style.background = "linear-gradient(45deg, #FF00FF, #00FFFF)";
+    document.body.style.backgroundSize = "400% 400%";
+    document.body.style.animation = "partyGradient 5s infinite alternate";
+    document.body.style.overflow = "hidden";
+
+    // Fjern gamle stjerner hvis de finnes
+    document.querySelectorAll(".star").forEach(star => star.remove());
+
+    // Lag glitter-stjerner
+    for (let i = 0; i < 100; i++) {
+      const star = document.createElement("div");
+      star.classList.add("star");
+      star.style.top = Math.random() * window.innerHeight + "px";
+      star.style.left = Math.random() * window.innerWidth + "px";
+      star.style.width = "5px";
+      star.style.height = "5px";
+      star.style.background = "white";
+      star.style.borderRadius = "50%";
+      star.style.position = "absolute";
+      star.style.animation = "twinkle 1s infinite alternate";
+      star.style.opacity = "0.8";
+      star.style.animationDuration = (Math.random() * 2 + 1) + "s";
+      document.body.appendChild(star);
+    }
+  }
+</script>
+
 </body>
 </html>
