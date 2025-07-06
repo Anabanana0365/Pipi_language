@@ -13,7 +13,7 @@
         
         body {
             font-family: 'Arial', sans-serif;
-            background: linear-gradient(135deg, #fa3737 100%, #764ba2 100%);
+            background: linear-gradient(135deg, red 0%, #764ba2 100%);
             min-height: 100vh;
             display: flex;
             align-items: center;
@@ -250,17 +250,14 @@
                 return;
             }
             
-            // Check if the current result is in Pipi language by looking for the pattern
             const isPipiLanguage = /pi[aeiouAEIOU]|po[bcdfghjklmnpqrstvwxyzBCDFGHJKLMNPQRSTVWXYZ]/g.test(currentResult);
             
             if (isPipiLanguage) {
-                // Decode from Pipi
                 let decoded = currentResult.replace(/pi([aeiouAEIOU])/g, '$1');
                 decoded = decoded.replace(/po([bcdfghjklmnpqrstvwxyzBCDFGHJKLMNPQRSTVWXYZ])/g, '$1');
                 output.value = decoded;
                 showPopup('Translation reversed - Decoded from Pipi Language!', 'success');
             } else {
-                // Encode to Pipi
                 let encoded = '';
                 const vowels = 'aeiouAEIOU';
                 
@@ -294,7 +291,6 @@
         }
         
         function showPopup(message, type) {
-            // Remove existing popup if any
             const existingPopup = document.querySelector('.popup');
             if (existingPopup) {
                 existingPopup.remove();
@@ -305,12 +301,10 @@
             popup.textContent = message;
             document.body.appendChild(popup);
             
-            // Show popup
             setTimeout(() => {
                 popup.classList.add('show');
             }, 100);
             
-            // Hide popup after 3 seconds
             setTimeout(() => {
                 popup.classList.remove('show');
                 setTimeout(() => {
@@ -319,7 +313,6 @@
             }, 3000);
         }
         
-        // Allow Enter key to auto-translate
         document.getElementById('input-text').addEventListener('keypress', function(e) {
             if (e.key === 'Enter' && !e.shiftKey) {
                 e.preventDefault();
