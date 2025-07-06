@@ -831,9 +831,13 @@
 }
 
 </script>
-
-    <script>
 function setNeonPulsePreset() {
+  if (!document.fullscreenElement) {
+    document.documentElement.requestFullscreen().catch(err => {
+      console.warn(`Kan ikke gå i fullskjerm: ${err.message}`);
+    });
+  }
+
   // Sett bakgrunn til svart for neon-effekt
   document.body.style.background = "#000000";
   document.body.style.animation = "";
@@ -852,13 +856,7 @@ function setNeonPulsePreset() {
     document.body.appendChild(dot);
   }
 }
-        if (!document.fullscreenElement) {
-  document.documentElement.requestFullscreen().catch(err => {
-    console.warn(`Kan ikke gå i fullskjerm: ${err.message}`);
-  });
-}
-
-</script>
+  </script>
 
 
 </body>
