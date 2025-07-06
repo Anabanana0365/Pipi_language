@@ -1,0 +1,762 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pipi Language Encoder/Decoder</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        
+        .container {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+            max-width: 600px;
+            width: 100%;
+        }
+        
+        h1 {
+            text-align: center;
+            color: #4a5568;
+            margin-bottom: 30px;
+            font-size: 2.5em;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        
+        .input-group {
+            margin-bottom: 25px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #2d3748;
+            font-weight: bold;
+            font-size: 1.1em;
+        }
+        
+        textarea {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #e2e8f0;
+            border-radius: 10px;
+            font-size: 16px;
+            resize: vertical;
+            min-height: 120px;
+            transition: border-color 0.3s ease;
+        }
+        
+        textarea:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+        
+        .button-group {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+        }
+        
+        button {
+            flex: 1;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            min-width: 120px;
+        }
+        
+        .encode-btn {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+        }
+        
+        .decode-btn {
+            background: linear-gradient(135deg, #f093fb, #f5576c);
+            color: white;
+        }
+        
+        .auto-btn {
+            background: linear-gradient(135deg, #ff9a9e, #fecfef);
+            color: white;
+        }
+        
+        .info-btn {
+            background: linear-gradient(135deg, #a8edea, #fed6e3);
+            color: #2d3748;
+            padding: 8px 16px;
+            font-size: 14px;
+            border-radius: 8px;
+            min-width: 80px;
+            margin: 0 5px;
+        }
+        
+        .customize-btn {
+            background: linear-gradient(135deg, #ffecd2, #fcb69f);
+            color: #2d3748;
+            padding: 8px 16px;
+            font-size: 14px;
+            border-radius: 8px;
+            min-width: 80px;
+            margin: 0 5px;
+        }
+        
+        .customize-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .customize-modal.show {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .customize-modal-content {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            max-width: 600px;
+            width: 90%;
+            max-height: 80%;
+            overflow-y: auto;
+            position: relative;
+            transform: scale(0.8);
+            transition: transform 0.3s ease;
+        }
+        
+        .customize-modal.show .customize-modal-content {
+            transform: scale(1);
+        }
+        
+        .customize-section {
+            margin-bottom: 25px;
+        }
+        
+        .customize-section h3 {
+            color: #2d3748;
+            margin-bottom: 15px;
+            font-size: 1.2em;
+        }
+        
+        .color-input-group {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+            gap: 10px;
+        }
+        
+        .color-input-group label {
+            min-width: 80px;
+            font-weight: normal;
+            margin-bottom: 0;
+        }
+        
+        .color-input {
+            width: 50px;
+            height: 35px;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+        
+        .preset-buttons {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-top: 15px;
+        }
+        
+        .preset-btn {
+            padding: 8px 12px;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            background: white;
+            cursor: pointer;
+            font-size: 12px;
+            transition: all 0.2s ease;
+        }
+        
+        .preset-btn:hover {
+            border-color: #667eea;
+        }
+        
+        .apply-btn {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-right: 10px;
+        }
+        
+        .reset-btn {
+            background: linear-gradient(135deg, #ff6b6b, #ee5a6f);
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        
+        .copy-btn {
+            background: linear-gradient(135deg, #4facfe, #00f2fe);
+            color: white;
+        }
+        
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        button:active {
+            transform: translateY(0);
+        }
+        
+        .popup {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 15px 20px;
+            border-radius: 10px;
+            color: white;
+            font-weight: bold;
+            z-index: 1000;
+            transform: translateX(400px);
+            transition: transform 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .popup.show {
+            transform: translateX(0);
+        }
+        
+        .popup.success {
+            background: linear-gradient(135deg, #56ab2f, #a8e6cf);
+        }
+        
+        .popup.info {
+            background: linear-gradient(135deg, #3498db, #2980b9);
+        }
+        
+        .info-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .info-modal.show {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .info-modal-content {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            max-width: 500px;
+            width: 90%;
+            max-height: 80%;
+            overflow-y: auto;
+            position: relative;
+            transform: scale(0.8);
+            transition: transform 0.3s ease;
+        }
+        
+        .info-modal.show .info-modal-content {
+            transform: scale(1);
+        }
+        
+        .info-modal h2 {
+            color: #2d3748;
+            margin-bottom: 20px;
+            text-align: center;
+            font-size: 1.8em;
+        }
+        
+        .info-modal p {
+            color: #4a5568;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+        
+        .info-modal ul {
+            color: #4a5568;
+            margin-left: 20px;
+            margin-bottom: 15px;
+        }
+        
+        .info-modal li {
+            margin-bottom: 8px;
+        }
+        
+        .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: #666;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: all 0.2s ease;
+        }
+        
+        .close-btn:hover {
+            background: #f0f0f0;
+            color: #333;
+        }
+        
+        .explanation {
+            background: rgba(255, 255, 255, 0.7);
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+            border-left: 4px solid #667eea;
+        }
+        
+        .explanation h3 {
+            color: #2d3748;
+            margin-bottom: 10px;
+        }
+        
+        .explanation p {
+            color: #4a5568;
+            line-height: 1.6;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🤫 Pipi Language 🤫</h1>
+        
+        <div class="input-group">
+            <label for="input-text">Enter your text:</label>
+            <textarea id="input-text" placeholder="Type your message here..."></textarea>
+        </div>
+        
+        <div class="button-group">
+            <button class="encode-btn" onclick="encodeText()">🔒 Encode to Pipi</button>
+            <button class="decode-btn" onclick="decodeText()">🔓 Decode from Pipi</button>
+            <button class="auto-btn" onclick="autoTranslate()">🔄 Reverse Translation</button>
+            <button class="copy-btn" onclick="copyToClipboard()">📋 Copy Result</button>
+        </div>
+        
+        <div class="input-group">
+            <label for="output-text">Result:</label>
+            <textarea id="output-text" readonly placeholder="Your encoded/decoded message will appear here..."></textarea>
+            <div style="text-align: center; margin-top: 10px;">
+                <button class="info-btn" onclick="showInfoPopup()">ℹ️ Info</button>
+                <button class="customize-btn" onclick="showCustomizePopup()">🎨 Customize</button>
+            </div>
+        </div>
+        
+    </div>
+
+    <!-- Info Modal -->
+    <div id="info-modal" class="info-modal">
+        <div class="info-modal-content">
+            <button class="close-btn" onclick="closeInfoPopup()">&times;</button>
+            <h2>🤫 About Pipi Language</h2>
+            <p><strong>Pipi Language</strong> is a fun secret cipher that transforms your text into a mysterious code!</p>
+            
+            <h3>How It Works:</h3>
+            <ul>
+                <li>Adds <strong>"pi"</strong> before every vowel (a, e, i, o, u)</li>
+                <li>Adds <strong>"po"</strong> before every consonant</li>
+                <li>Leaves spaces and punctuation unchanged</li>
+            </ul>
+            
+            <h3>Example:</h3>
+            <p><strong>Normal:</strong> "Hello World"<br>
+            <strong>Pipi:</strong> "poHpielpoloplopoo poWpioporporpold"</p>
+            
+            <h3>Button Functions:</h3>
+            <ul>
+                <li><strong>🔒 Encode to Pipi:</strong> Converts normal text to Pipi Language <em>(Press "E")</em></li>
+                <li><strong>🔓 Decode from Pipi:</strong> Converts Pipi Language back to normal text <em>(Press "D")</em></li>
+                <li><strong>🔄 Reverse Translation:</strong> Flips whatever is in the result field <em>(Press "R")</em></li>
+                <li><strong>📋 Copy Result:</strong> Copies the translated text to your clipboard <em>(Press "C")</em></li>
+            </ul>
+            
+            <p><em>Perfect for sending secret messages to friends who know the code!</em></p>
+        </div>
+    </div>
+
+    <!-- Customize Modal -->
+    <div id="customize-modal" class="customize-modal">
+        <div class="customize-modal-content">
+            <button class="close-btn" onclick="closeCustomizePopup()">&times;</button>
+            <h2>🎨 Customize Pipi Language</h2>
+            
+            <div class="customize-section">
+                <h3>Background Gradient</h3>
+                <div class="color-input-group">
+                    <label>Color 1:</label>
+                    <input type="color" id="bg-color1" class="color-input" value="#667eea">
+                    <label>Color 2:</label>
+                    <input type="color" id="bg-color2" class="color-input" value="#764ba2">
+                </div>
+                <div class="preset-buttons">
+                    <button class="preset-btn" onclick="setBackgroundPreset('#667eea', '#764ba2')">Default</button>
+                    <button class="preset-btn" onclick="setBackgroundPreset('#ff9a9e', '#fecfef')">Pink</button>
+                    <button class="preset-btn" onclick="setBackgroundPreset('#a8edea', '#fed6e3')">Mint</button>
+                    <button class="preset-btn" onclick="setBackgroundPreset('#ffecd2', '#fcb69f')">Orange</button>
+                    <button class="preset-btn" onclick="setBackgroundPreset('#667eea', '#764ba2')">Purple</button>
+                </div>
+            </div>
+            
+            <div class="customize-section">
+                <h3>Encode Button</h3>
+                <div class="color-input-group">
+                    <label>Color 1:</label>
+                    <input type="color" id="encode-color1" class="color-input" value="#667eea">
+                    <label>Color 2:</label>
+                    <input type="color" id="encode-color2" class="color-input" value="#764ba2">
+                </div>
+            </div>
+            
+            <div class="customize-section">
+                <h3>Decode Button</h3>
+                <div class="color-input-group">
+                    <label>Color 1:</label>
+                    <input type="color" id="decode-color1" class="color-input" value="#f093fb">
+                    <label>Color 2:</label>
+                    <input type="color" id="decode-color2" class="color-input" value="#f5576c">
+                </div>
+            </div>
+            
+            <div class="customize-section">
+                <h3>Reverse Button</h3>
+                <div class="color-input-group">
+                    <label>Color 1:</label>
+                    <input type="color" id="reverse-color1" class="color-input" value="#ff9a9e">
+                    <label>Color 2:</label>
+                    <input type="color" id="reverse-color2" class="color-input" value="#fecfef">
+                </div>
+            </div>
+            
+            <div class="customize-section">
+                <h3>Copy Button</h3>
+                <div class="color-input-group">
+                    <label>Color 1:</label>
+                    <input type="color" id="copy-color1" class="color-input" value="#4facfe">
+                    <label>Color 2:</label>
+                    <input type="color" id="copy-color2" class="color-input" value="#00f2fe">
+                </div>
+            </div>
+            
+            <div style="text-align: center; margin-top: 30px;">
+                <button class="apply-btn" onclick="applyCustomization()">Apply Changes</button>
+                <button class="reset-btn" onclick="resetToDefault()">Reset to Default</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function encodeText() {
+            const input = document.getElementById('input-text').value;
+            const output = document.getElementById('output-text');
+            
+            if (!input.trim()) {
+                showPopup('Please enter some text to encode!', 'info');
+                return;
+            }
+            
+            let encoded = '';
+            const vowels = 'aeiouAEIOU';
+            
+            for (let char of input) {
+                if (char.match(/[a-zA-Z]/)) {
+                    if (vowels.includes(char)) {
+                        encoded += 'pi' + char;
+                    } else {
+                        encoded += 'po' + char;
+                    }
+                } else {
+                    encoded += char;
+                }
+            }
+            
+            output.value = encoded;
+            showPopup('Text successfully encoded to Pipi Language!', 'success');
+        }
+        
+        function decodeText() {
+            const input = document.getElementById('input-text').value;
+            const output = document.getElementById('output-text');
+            
+            if (!input.trim()) {
+                showPopup('Please enter some text to decode!', 'info');
+                return;
+            }
+            
+            let decoded = input.replace(/pi([aeiouAEIOU])/g, '$1');
+            decoded = decoded.replace(/po([bcdfghjklmnpqrstvwxyzBCDFGHJKLMNPQRSTVWXYZ])/g, '$1');
+            
+            output.value = decoded;
+            showPopup('Text successfully decoded from Pipi Language!', 'success');
+        }
+        
+        function autoTranslate() {
+            const output = document.getElementById('output-text');
+            const currentResult = output.value;
+            
+            if (!currentResult.trim()) {
+                showPopup('No translation to reverse! Please encode or decode some text first.', 'info');
+                return;
+            }
+            
+            // Check if the current result is in Pipi language by looking for the pattern
+            const isPipiLanguage = /pi[aeiouAEIOU]|po[bcdfghjklmnpqrstvwxyzBCDFGHJKLMNPQRSTVWXYZ]/g.test(currentResult);
+            
+            if (isPipiLanguage) {
+                // Decode from Pipi
+                let decoded = currentResult.replace(/pi([aeiouAEIOU])/g, '$1');
+                decoded = decoded.replace(/po([bcdfghjklmnpqrstvwxyzBCDFGHJKLMNPQRSTVWXYZ])/g, '$1');
+                output.value = decoded;
+                showPopup('Translation reversed - Decoded from Pipi Language!', 'success');
+            } else {
+                // Encode to Pipi
+                let encoded = '';
+                const vowels = 'aeiouAEIOU';
+                
+                for (let char of currentResult) {
+                    if (char.match(/[a-zA-Z]/)) {
+                        if (vowels.includes(char)) {
+                            encoded += 'pi' + char;
+                        } else {
+                            encoded += 'po' + char;
+                        }
+                    } else {
+                        encoded += char;
+                    }
+                }
+                output.value = encoded;
+                showPopup('Translation reversed - Encoded to Pipi Language!', 'success');
+            }
+        }
+        
+        // Customization variables (stored in memory for this session)
+        let customColors = {
+            background: ['#667eea', '#764ba2'],
+            encode: ['#667eea', '#764ba2'],
+            decode: ['#f093fb', '#f5576c'],
+            reverse: ['#ff9a9e', '#fecfef'],
+            copy: ['#4facfe', '#00f2fe']
+        };
+        
+        function showCustomizePopup() {
+            const modal = document.getElementById('customize-modal');
+            // Load current colors into inputs
+            document.getElementById('bg-color1').value = customColors.background[0];
+            document.getElementById('bg-color2').value = customColors.background[1];
+            document.getElementById('encode-color1').value = customColors.encode[0];
+            document.getElementById('encode-color2').value = customColors.encode[1];
+            document.getElementById('decode-color1').value = customColors.decode[0];
+            document.getElementById('decode-color2').value = customColors.decode[1];
+            document.getElementById('reverse-color1').value = customColors.reverse[0];
+            document.getElementById('reverse-color2').value = customColors.reverse[1];
+            document.getElementById('copy-color1').value = customColors.copy[0];
+            document.getElementById('copy-color2').value = customColors.copy[1];
+            modal.classList.add('show');
+        }
+        
+        function closeCustomizePopup() {
+            const modal = document.getElementById('customize-modal');
+            modal.classList.remove('show');
+        }
+        
+        function setBackgroundPreset(color1, color2) {
+            document.getElementById('bg-color1').value = color1;
+            document.getElementById('bg-color2').value = color2;
+        }
+        
+        function applyCustomization() {
+            // Get colors from inputs
+            customColors.background = [document.getElementById('bg-color1').value, document.getElementById('bg-color2').value];
+            customColors.encode = [document.getElementById('encode-color1').value, document.getElementById('encode-color2').value];
+            customColors.decode = [document.getElementById('decode-color1').value, document.getElementById('decode-color2').value];
+            customColors.reverse = [document.getElementById('reverse-color1').value, document.getElementById('reverse-color2').value];
+            customColors.copy = [document.getElementById('copy-color1').value, document.getElementById('copy-color2').value];
+            
+            // Apply background
+            document.body.style.background = `linear-gradient(135deg, ${customColors.background[0]} 0%, ${customColors.background[1]} 100%)`;
+            
+            // Apply button colors
+            const encodeBtn = document.querySelector('.encode-btn');
+            const decodeBtn = document.querySelector('.decode-btn');
+            const reverseBtn = document.querySelector('.auto-btn');
+            const copyBtn = document.querySelector('.copy-btn');
+            
+            encodeBtn.style.background = `linear-gradient(135deg, ${customColors.encode[0]}, ${customColors.encode[1]})`;
+            decodeBtn.style.background = `linear-gradient(135deg, ${customColors.decode[0]}, ${customColors.decode[1]})`;
+            reverseBtn.style.background = `linear-gradient(135deg, ${customColors.reverse[0]}, ${customColors.reverse[1]})`;
+            copyBtn.style.background = `linear-gradient(135deg, ${customColors.copy[0]}, ${customColors.copy[1]})`;
+            
+            closeCustomizePopup();
+            showPopup('Customization applied successfully!', 'success');
+        }
+        
+        function resetToDefault() {
+            customColors = {
+                background: ['#667eea', '#764ba2'],
+                encode: ['#667eea', '#764ba2'],
+                decode: ['#f093fb', '#f5576c'],
+                reverse: ['#ff9a9e', '#fecfef'],
+                copy: ['#4facfe', '#00f2fe']
+            };
+            applyCustomization();
+            showPopup('Reset to default colors!', 'info');
+        }
+        
+        // Close customize modal when clicking outside
+        document.getElementById('customize-modal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeCustomizePopup();
+            }
+        });
+        
+        function showInfoPopup() {
+            const modal = document.getElementById('info-modal');
+            modal.classList.add('show');
+        }
+        
+        function closeInfoPopup() {
+            const modal = document.getElementById('info-modal');
+            modal.classList.remove('show');
+        }
+        
+        // Close modal when clicking outside of it
+        document.getElementById('info-modal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeInfoPopup();
+            }
+        });
+        
+        // Close modal with Escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeInfoPopup();
+            }
+        });
+        
+        // Keyboard shortcuts
+        document.addEventListener('keydown', function(e) {
+            // Only trigger if not typing in a textarea and modal is not open
+            if (e.target.tagName.toLowerCase() !== 'textarea' && !document.getElementById('info-modal').classList.contains('show')) {
+                if (e.key.toLowerCase() === 'e') {
+                    e.preventDefault();
+                    encodeText();
+                } else if (e.key.toLowerCase() === 'd') {
+                    e.preventDefault();
+                    decodeText();
+                } else if (e.key.toLowerCase() === 'c') {
+                    e.preventDefault();
+                    copyToClipboard();
+                } else if (e.key.toLowerCase() === 'r') {
+                    e.preventDefault();
+                    autoTranslate();
+                }
+            }
+        });
+        
+        function copyToClipboard() {
+            const output = document.getElementById('output-text');
+            
+            if (!output.value.trim()) {
+                showPopup('Nothing to copy! Please encode or decode some text first.', 'info');
+                return;
+            }
+            
+            output.select();
+            document.execCommand('copy');
+            showPopup('Text copied to clipboard!', 'success');
+        }
+        
+        function showPopup(message, type) {
+            // Remove existing popup if any
+            const existingPopup = document.querySelector('.popup');
+            if (existingPopup) {
+                existingPopup.remove();
+            }
+            
+            const popup = document.createElement('div');
+            popup.className = `popup ${type}`;
+            popup.textContent = message;
+            document.body.appendChild(popup);
+            
+            // Show popup
+            setTimeout(() => {
+                popup.classList.add('show');
+            }, 100);
+            
+            // Hide popup after 3 seconds
+            setTimeout(() => {
+                popup.classList.remove('show');
+                setTimeout(() => {
+                    popup.remove();
+                }, 300);
+            }, 3000);
+        }
+        
+        // Allow Enter key to auto-translate
+        document.getElementById('input-text').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter' && !e.shiftKey) {
+                e.preventDefault();
+                autoTranslate();
+            }
+        });
+    </script>
+</body>
+</html>
