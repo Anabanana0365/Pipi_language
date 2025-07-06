@@ -1,7 +1,7 @@
 # how to use
 
 
-- download the [`pipi_language (5).html`](https://github.com/Anabanana0365/Pipi_language/blob/main/pipi_language%20(5).html)
+- download the [`pipi_language_fixed.html`](https://github.com/Anabanana0365/Pipi_language/blob/main/pipi_language_fixed.html)
  -file.
 - open it in your browser
 - ready to use!
