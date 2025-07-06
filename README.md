@@ -1,34 +1,23 @@
 # how to use
 
 
-- download the `pipi_language.html`-file and the `info.html`-file.
-- put both files in a folder in your computers file explorer. name "it pipi_language" if you want.
-- open the `pipi_language.html` that are in the folder.
-- now you can use it.
+- download the [`pipi_language (5).html`](https://github.com/Anabanana0365/Pipi_language/blob/main/pipi_language%20(5).html)
+ -file.
+- open it in your browser
+- ready to use!
 
-**if you dont put the two files in a folder the button named "info" will NOT work.**
+i think to add `localStorage` to save customization. if you want to do it, do it then. 😃
 
-so do that your checkist looks like this:
+# how to help me with the `localStorage`
 
-
-- [x] put the `pipi_language.html`-file in the folder
-- [x] put the `info.html-file` in the same folder
-- [x] open the `pipi_language.html`-file in the folder
-- [ ] open the `pipi_language.html`-file that **not** are in the folder
-
-
-instead of this!:
+- fork this repo
+- add `localStorage`
+- start a pull request
+- i'll check it
+- if it work ill add it and credit you :) 
 
 
-- [ ] put the `pipi_language.html`-file in the folder
-- [ ] put the `info.html-file` in the same folder
-- [ ] open the `pipi_language.html`-file in the folder
-- [x] open the `pipi_language.html`-file that **not** are in the folder
 
-
-# tips for lazy guys
-
-download the `pipi_language_folder.zip` and open it! then you dont need to put the two files in a folder yourself!
 
 
 
