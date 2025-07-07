@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pipi Language</title>
+    <title>Pipi Språket</title>
     <style>
         * {
             margin: 0;
@@ -410,26 +410,26 @@
 </head>
 <body>
     <div class="container">
-        <h1> Pipi Language </h1>
+        <h1> Pipi språket </h1>
         
         <div class="input-group">
-            <label for="input-text">Enter your text:</label>
-            <textarea id="input-text" placeholder="Type your message here..."></textarea>
+            <label for="input-text">Skriv inn tekst:</label>
+            <textarea id="input-text" placeholder="Skriv teksten her..."></textarea>
         </div>
         
         <div class="button-group">
-            <button class="encode-btn" onclick="encodeText()">🔒 Encode to Pipi</button>
-            <button class="decode-btn" onclick="decodeText()">🔓 Decode from Pipi</button>
-            <button class="auto-btn" onclick="autoTranslate()">🔄 Reverse Translation</button>
-            <button class="copy-btn" onclick="copyToClipboard()">📋 Copy Result</button>
+            <button class="encode-btn" onclick="encodeText()">🔒 Krypter til Pipi</button>
+            <button class="decode-btn" onclick="decodeText()">🔓 Dekrypter fraPipi</button>
+            <button class="auto-btn" onclick="autoTranslate()">🔄 Reverser oversettelse</button>
+            <button class="copy-btn" onclick="copyToClipboard()">📋 Kopier resultat</button>
         </div>
         
         <div class="input-group">
-            <label for="output-text">Result:</label>
-            <textarea id="output-text" readonly placeholder="Your encoded/decoded message will appear here..."></textarea>
+            <label for="output-text">Resultat:</label>
+            <textarea id="output-text" readonly placeholder="Oversettelsen dukker opp her..."></textarea>
             <div style="text-align: center; margin-top: 10px;">
                 <button class="info-btn" onclick="showInfoPopup()">ℹ️ Info</button>
-                <button class="customize-btn" onclick="showCustomizePopup()">🎨 Customize</button>
+                <button class="customize-btn" onclick="showCustomizePopup()">🎨 Tilpass tema</button>
             </div>
         </div>
         
@@ -439,30 +439,30 @@
     <div id="info-modal" class="info-modal">
         <div class="info-modal-content">
             <button class="close-btn" onclick="closeInfoPopup()">&times;</button>
-            <h2>🤫 About Pipi Language</h2>
-            <p><strong>Pipi Language</strong> is a fun secret cipher that transforms your text into a mysterious code!</p>
+            <h2> Om Pipi språket</h2>
+            <p><strong>Pipi Språket</strong> er en morsom oversetter som trasformerer tekst til en mystisk kode!</p>
             
-            <h3>How It Works:</h3>
+            <h3>Hvordan den funker:</h3>
             <ul>
-                <li>Adds <strong>"pi"</strong> before every vowel (a, e, i, o, u)</li>
-                <li>Adds <strong>"po"</strong> before every consonant</li>
-                <li>Leaves spaces, punctuation, letters from other languages unchanged</li>
+                <li>Putter <strong>"pi"</strong> før hver vokal (a, e, i, o, u)</li>
+                <li>Putter <strong>"po"</strong> før hver konsonat</li>
+                <li>Lar spesialtegn, tall og bokstaver fra andre land bli som det er.</li>
             </ul>
             
-            <h3>Example:</h3>
-            <p><strong>Normal:</strong> "Hello World"<br>
-            <strong>Pipi:</strong> "poHpielpoloplopoo poWpioporporpold"</p>
+            <h3>Eksempel:</h3>
+            <p><strong>Normal:</strong> "Hei, verden!"<br>
+            <strong>Pipi:</strong> "poHpiepii, povpieporpodpiepon!"</p>
             
-            <h3>Button Functions:</h3>
+            <h3>Knappenes funksjoner:</h3>
             <ul>
-                <li><strong>🔒 Encode to Pipi:</strong> Converts normal text to Pipi Language <em>(Press "E")</em></li>
-                <li><strong>🔓 Decode from Pipi:</strong> Converts Pipi Language back to normal text <em>(Press "D")</em></li>
-                <li><strong>🔄 Reverse Translation:</strong> Flips whatever is in the result field <em>(Press "R")</em></li>
-                <li><strong>📋 Copy Result:</strong> Copies the translated text to your clipboard <em>(Press "C")</em></li>
+                <li><strong>🔒 Krypter til Pipi:</strong> Oversetter normal tekst til Pipi <em>(Trykk "E")</em></li>
+                <li><strong>🔓 Dekrypter fra Pipi:</strong> Oversetter Pipi til normal tekst <em>(Trykk "D")</em></li>
+                <li><strong>🔄 Reverser oversettelse:</strong> Reverserer hva enn som er i resulat-feltet <em>(Trykk "R" eller "Enter")</em></li>
+                <li><strong>📋 Kopier resultat:</strong> Kopierer oversettelsen til utklippstavlen <em>(Trykk "C")</em></li>
             </ul>
             
-            <p><em>Perfect for sending secret messages to friends who know the code or have this file!</em></p>
-          <strong>NOTE: When you enter one off the party presets, make sure to go in fullscreen. (often f11 or fn + f11</strong>
+            <p><em>Pefekt for å sende hemmelige meldinger til venner eller familie!</em></p>
+          <strong>PS: Når du går i en av party-modusene, så går nettsiden i fullskjerm. </strong>
         </div>
     </div>
 
@@ -470,24 +470,24 @@
     <div id="customize-modal" class="customize-modal">
         <div class="customize-modal-content">
             <button class="close-btn" onclick="closeCustomizePopup()">&times;</button>
-            <h2>🎨 Customize Pipi Language</h2>
+            <h2>🎨 Tilpass tema</h2>
             
             <div class="customize-section">
-                <h3>Background Gradient</h3>
+                <h3>Bakgrunn Gradient</h3>
                 <div class="color-input-group">
-                    <label>Color 1:</label>
+                    <label>Farge 1:</label>
                     <input type="color" id="bg-color1" class="color-input" value="#667eea">
-                    <label>Color 2:</label>
+                    <label>Farge 2:</label>
                     <input type="color" id="bg-color2" class="color-input" value="#764ba2">
                 </div>
                 <div class="preset-buttons">
-                    <button class="preset-btn" onclick="setBackgroundPreset('#667eea', '#764ba2')">Default</button>
-                    <button class="preset-btn" onclick="setBackgroundPreset('#ff9a9e', '#fecfef')">Pink</button>
+                    <button class="preset-btn" onclick="setBackgroundPreset('#667eea', '#764ba2')">Normal</button>
+                    <button class="preset-btn" onclick="setBackgroundPreset('#ff9a9e', '#fecfef')">Rosa</button>
                     <button class="preset-btn" onclick="setBackgroundPreset('#a8edea', '#fed6e3')">Mint</button>
                     <button class="preset-btn" onclick="setBackgroundPreset('#ffecd2', '#fcb69f')">Orange</button>
-                   <button class="preset-btn" onclick="setBackgroundPreset('#B00020', '#6A0DAD')">Red</button>
-                    <button class="preset-btn" onclick="setPartyPreset()">Party Preset 1</button>
-                    <button class="preset-btn" onclick="setNeonPulsePreset()">Party Preset 2</button>
+                   <button class="preset-btn" onclick="setBackgroundPreset('#B00020', '#6A0DAD')">Rød</button>
+                    <button class="preset-btn" onclick="setPartyPreset()">Party modus 1</button>
+                    <button class="preset-btn" onclick="setNeonPulsePreset()">Party modus 2</button>
 
 
 
@@ -495,48 +495,48 @@
             </div>
             
             <div class="customize-section">
-                <h3>Encode Button</h3>
+                <h3>Krypter-knapp</h3>
                 <div class="color-input-group">
-                    <label>Color 1:</label>
+                    <label>Farge 1:</label>
                     <input type="color" id="encode-color1" class="color-input" value="#667eea">
-                    <label>Color 2:</label>
+                    <label>Farge 2:</label>
                     <input type="color" id="encode-color2" class="color-input" value="#764ba2">
                 </div>
             </div>
             
             <div class="customize-section">
-                <h3>Decode Button</h3>
+                <h3>Dekrypter-knapp</h3>
                 <div class="color-input-group">
-                    <label>Color 1:</label>
+                    <label>Farge 1:</label>
                     <input type="color" id="decode-color1" class="color-input" value="#f093fb">
-                    <label>Color 2:</label>
+                    <label>Farge 2:</label>
                     <input type="color" id="decode-color2" class="color-input" value="#f5576c">
                 </div>
             </div>
             
             <div class="customize-section">
-                <h3>Reverse Button</h3>
+                <h3>Reverser-knapp</h3>
                 <div class="color-input-group">
-                    <label>Color 1:</label>
+                    <label>Farge 1:</label>
                     <input type="color" id="reverse-color1" class="color-input" value="#ff9a9e">
-                    <label>Color 2:</label>
+                    <label>Farge 2:</label>
                     <input type="color" id="reverse-color2" class="color-input" value="#fecfef">
                 </div>
             </div>
             
             <div class="customize-section">
-                <h3>Copy Button</h3>
+                <h3>Kopier-knapo</h3>
                 <div class="color-input-group">
-                    <label>Color 1:</label>
+                    <label>Farge 1:</label>
                     <input type="color" id="copy-color1" class="color-input" value="#4facfe">
-                    <label>Color 2:</label>
+                    <label>Farge 2:</label>
                     <input type="color" id="copy-color2" class="color-input" value="#00f2fe">
                 </div>
             </div>
             
             <div style="text-align: center; margin-top: 30px;">
-                <button class="apply-btn" onclick="applyCustomization()">Apply Changes</button>
-                <button class="reset-btn" onclick="resetToDefault()">Reset to Default</button>
+                <button class="apply-btn" onclick="applyCustomization()">Aktiver endringer</button>
+                <button class="reset-btn" onclick="resetToDefault()">Reset til standard</button>
             </div>
         </div>
     </div>
@@ -547,7 +547,7 @@
             const output = document.getElementById('output-text');
             
             if (!input.trim()) {
-                showPopup('Please enter some text to encode!', 'info');
+                showPopup('Putt inn noe tekst til å kryptere!', 'info');
                 return;
             }
             
@@ -567,7 +567,7 @@
             }
             
             output.value = encoded;
-            showPopup('Text successfully encoded to Pipi Language!', 'success');
+            showPopup('Tekst oversettet til Pipi!', 'success');
         }
         
         function decodeText() {
@@ -575,7 +575,7 @@
             const output = document.getElementById('output-text');
             
             if (!input.trim()) {
-                showPopup('Please enter some text to decode!', 'info');
+                showPopup('Putt inn noe tekst til å dekryptere!', 'info');
                 return;
             }
             
@@ -583,7 +583,7 @@
             decoded = decoded.replace(/po([bcdfghjklmnpqrstvwxyzBCDFGHJKLMNPQRSTVWXYZ])/g, '$1');
             
             output.value = decoded;
-            showPopup('Text successfully decoded from Pipi Language!', 'success');
+            showPopup('Tekst oversettet fra Pipi!', 'success');
         }
         
         function autoTranslate() {
@@ -591,7 +591,7 @@
             const currentResult = output.value;
             
             if (!currentResult.trim()) {
-                showPopup('No translation to reverse! Please encode or decode some text first.', 'info');
+                showPopup('Ingen oversettelse til å reversere!', 'info');
                 return;
             }
             
@@ -685,7 +685,7 @@
             copyBtn.style.background = `linear-gradient(135deg, ${customColors.copy[0]}, ${customColors.copy[1]})`;
             
             closeCustomizePopup();
-            showPopup('Customization applied successfully!', 'success');
+            showPopup('Tilpassing ble aktivert!', 'success');
         }
         
         function resetToDefault() {
@@ -697,7 +697,7 @@
                 copy: ['#4facfe', '#00f2fe']
             };
             applyCustomization();
-            showPopup('Reset to default colors!', 'info');
+            showPopup('Byttet til standard farger!', 'info');
         }
         
         // Close customize modal when clicking outside
@@ -755,13 +755,13 @@
             const output = document.getElementById('output-text');
             
             if (!output.value.trim()) {
-                showPopup('Nothing to copy! Please encode or decode some text first.', 'info');
+                showPopup('Ingenting å kopiere!', 'info');
                 return;
             }
             
             output.select();
             document.execCommand('copy');
-            showPopup('Text copied to clipboard!', 'success');
+            showPopup('Tekst kopiert!', 'success');
         }
         
         function showPopup(message, type) {
